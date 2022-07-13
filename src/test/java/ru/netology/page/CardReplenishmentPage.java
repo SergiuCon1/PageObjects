@@ -2,6 +2,7 @@ package ru.netology.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.FindBy;
 import ru.netology.data.DataHelper;
 
@@ -18,7 +19,7 @@ public class CardReplenishmentPage {
     private SelenideElement sendButton = $("[data-test-id=\"action-transfer\"] .button__content");
     SelenideElement cancelButton = $("[data-test-id=\"action-cancel\"] .button__content");
 
-    DataHelper.CardNumber data;
+    DataHelper data;
 
     public CardReplenishmentPage() {
         dashboard.shouldBe(visible);
@@ -29,5 +30,11 @@ public class CardReplenishmentPage {
         fromCard.val(data.getCardNumber(indexCardFrom));
         sendButton.click();
         return new DashboardPage();
+    }
+
+    //TODO: После исправления бага необходимо будет удалить метод очистки
+    public void clearData() {
+        amountMoney.sendKeys(Keys.CONTROL, "a", Keys.BACK_SPACE);
+        fromCard.sendKeys(Keys.CONTROL, "a", Keys.BACK_SPACE);
     }
 }

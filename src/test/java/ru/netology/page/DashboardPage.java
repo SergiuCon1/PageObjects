@@ -18,17 +18,13 @@ public class DashboardPage {
     private ElementsCollection cards = $$(".list__item div");
     private final String balanceStart = "баланс: ";
     private final String balanceFinish = " р.";
+
     public DashboardPage() {
         heading.shouldBe(visible);
     }
 
     public CardReplenishmentPage replenishmentCard(int index) {
         buttons.get(index).click();
-        return new CardReplenishmentPage();
-    }
-
-    public CardReplenishmentPage replenishmentSecondCard() {
-        buttons.get(1).click();
         return new CardReplenishmentPage();
     }
 
@@ -42,10 +38,5 @@ public class DashboardPage {
         val finish = text.indexOf(balanceFinish);
         val value = text.substring(start + balanceStart.length(), finish);
         return Integer.parseInt(value);
-    }
-
-    public void assertBalance(int index, int expected) {
-        int actual = getCardBalance(index);
-        assertEquals(expected, actual);
     }
 }
