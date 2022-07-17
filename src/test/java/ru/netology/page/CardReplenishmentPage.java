@@ -8,6 +8,8 @@ import ru.netology.data.DataHelper;
 
 import javax.xml.crypto.Data;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
@@ -18,6 +20,8 @@ public class CardReplenishmentPage {
     private SelenideElement fromCard = $("[data-test-id=\"from\"] .input__control");
     private SelenideElement sendButton = $("[data-test-id=\"action-transfer\"] .button__content");
     SelenideElement cancelButton = $("[data-test-id=\"action-cancel\"] .button__content");
+    private SelenideElement errorMessage = $("[data-test-id=\"error-notification\"] .notification__content");
+
 
     DataHelper data;
 
@@ -27,8 +31,26 @@ public class CardReplenishmentPage {
 
     public DashboardPage filledData(int amount, int indexCardFrom) {
         amountMoney.val(String.valueOf(amount));
-        fromCard.val(data.getCardNumber(indexCardFrom));
+        switch (indexCardFrom) {
+            case 0:
+                fromCard.val(data.getFirstCardNumber());
+                break;
+            case 1:
+                fromCard.val(data.getSecondCardNumber());
+                break;
+        }
         sendButton.click();
+        return new DashboardPage();
+    }
+
+    public void getErrorMessage() {
+        String textMessage = "На вашем счету недостаточно средств";
+        errorMessage.should(visible, Duration.ofSeconds(5));
+        errorMessage.shouldHave(Condition.text(textMessage));
+    }
+
+    public DashboardPage cancelOperation() {
+        cancelButton.click();
         return new DashboardPage();
     }
 

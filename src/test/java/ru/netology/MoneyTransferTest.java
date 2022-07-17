@@ -51,7 +51,7 @@ class MoneyTransferTest {
         //Проверяем баланс второй карты
         assertEquals(dashboardPage.getCardBalance(1), 10000);
     }
-    @Disabled
+
     @Test
     void shouldValidationMessageWhenTransferMoreThanCurrentBalance() {
         DashboardPage dashboardPage = new DashboardPage();
@@ -65,5 +65,9 @@ class MoneyTransferTest {
         cardReplenishment.filledData(50000, 1);
         //Баг: должно появляться сообщение о нехвватке средств на счету
         //TODO: Добавить assertEquals, когда пофиксят баг
+        cardReplenishment.getErrorMessage();
+        cardReplenishment.cancelOperation();
+        assertEquals(dashboardPage.getCardBalance(0), 10000);
+        assertEquals(dashboardPage.getCardBalance(1), 10000);
     }
 }

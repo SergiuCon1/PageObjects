@@ -32,11 +32,15 @@ public class DataHelper {
 
     @Value
     public static class CardNumber {
-        private static String[] cardNumber = new String[]{"5559 0000 0000 0001", "5559 0000 0000 0002"};
+        private static String firstCard = "5559 0000 0000 0001";
+        private static String secondCard = "5559 0000 0000 0002";
     }
 
-    public static String getCardNumber(int index) {
-        String card = new CardNumber().cardNumber[index];
-        return card;
+    public static String getFirstCardNumber() {
+        return CardNumber.firstCard;
+    }
+
+    public static String getSecondCardNumber() {
+        return CardNumber.secondCard;
     }
 }
